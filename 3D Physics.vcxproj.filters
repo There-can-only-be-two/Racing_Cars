@@ -87,15 +87,11 @@
     <ClInclude Include="Application.h">
       <Filter>Sources\App</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleRenderer2D.h">
+    <ClInclude Include="ModuleRender2D.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleFonts.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleTextures.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
+    <ClInclude Include="ModuleFonts.h" />
+    <ClInclude Include="ModuleTextures.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -158,14 +154,10 @@
     <ClCompile Include="Main.cpp">
       <Filter>Sources\App</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleRenderer2D.cpp">
+    <ClCompile Include="ModuleRender2D.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleFonts.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
+    <ClCompile Include="ModuleFonts.cpp" />
+    <ClCompile Include="ModuleTextures.cpp" />
   </ItemGroup>
 </Project>

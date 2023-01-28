@@ -2,10 +2,11 @@
 
 #include "Module.h"
 #include "Globals.h"
-//#include <chrono>
+#include <chrono>
 
 #define DEBUG_BOX 225
 
+using namespace std::chrono;
 
 class ModuleDebug : public Module
 {
@@ -15,10 +16,11 @@ public:
 	virtual ~ModuleDebug();
 
 	bool Start();
-	update_status Update(float dt);	// Switch debug on/off
+	update_status Update();	// Switch debug on/off
 	update_status PostUpdate();		// Draw if debug true
 
 	void DrawDebug();
+	void DrawPhysics();
 
 public:
 	//flags
@@ -33,8 +35,8 @@ public:
 	bool isGrenade = false;
 	bool noGravity = false;
 
-	//microseconds timePerCycle;
-	//microseconds elapsedFrame;
+	microseconds timePerCycle;
+	microseconds elapsedFrame;
 	int desiredFPSmic;
 	float desiredFPS = 60.0f;
 	int saveGravity;

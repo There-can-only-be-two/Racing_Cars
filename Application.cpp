@@ -2,23 +2,14 @@
 
 Application::Application()
 {
-	window		=	new ModuleWindow(this);
-	camera		=	new ModuleCamera3D(this);
-	input		=	new ModuleInput(this);
-	textures	=	new ModuleTextures(this);
-	fonts		=	new ModuleFonts(this);
-	audio		=	new ModuleAudio(this, true);
-	physics		=	new ModulePhysics3D(this);
-
-	scene_intro =	new ModuleSceneIntro(this);
-	player		=	new ModulePlayer(this);
-
-	debug		=	new ModuleDebug(this);
-
-	renderer3D	=	new ModuleRenderer3D(this);
-	renderer2D	=	new ModuleRenderer2D(this);
-
-
+	window = new ModuleWindow(this);
+	input = new ModuleInput(this);
+	audio = new ModuleAudio(this, true);
+	scene_intro = new ModuleSceneIntro(this);
+	renderer3D = new ModuleRenderer3D(this);
+	camera = new ModuleCamera3D(this);
+	physics = new ModulePhysics3D(this);
+	player = new ModulePlayer(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -28,8 +19,6 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(textures);
-	AddModule(fonts);
 	AddModule(audio);
 	AddModule(physics);
 	
@@ -37,12 +26,8 @@ Application::Application()
 	AddModule(scene_intro);
 	AddModule(player);
 
-	//Debug
-	AddModule(debug);
-
 	// Renderer last!
 	AddModule(renderer3D);
-	AddModule(renderer2D);
 }
 
 Application::~Application()
