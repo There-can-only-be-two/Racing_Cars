@@ -40,7 +40,7 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	if (true)
+	if (false)
 	{
 		Position.x = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 16 * App->player->vehicle->vehicle->getForwardVector().getX();
 		Position.y = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 8 * App->player->vehicle->vehicle->getUpAxis();
