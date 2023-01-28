@@ -41,7 +41,7 @@ void PhysVehicle3D::Render()
 	}
 	
 	// Chassis parts
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		Cube chassis(info.chassisList[i].size.x, info.chassisList[i].size.y, info.chassisList[i].size.z);
 		vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);

@@ -23,9 +23,9 @@ bool ModulePlayer::Start()
 	// Car properties ----------------------------------------
 	car.num_chassis = 11;
 
-	car.chassisList[0].size.Set(2, 0.7, 6);
-	car.chassisList[1].size.Set(0, 0, 0);
-	car.chassisList[2].size.Set(0, 0, 0);
+	car.chassisList[0].size.Set(2, 0.7, 4);
+	car.chassisList[1].size.Set(1.6, 0.3, 3.5);
+	car.chassisList[2].size.Set(1.2, 0.5, 2);
 	car.chassisList[3].size.Set(0, 0, 0);
 	car.chassisList[4].size.Set(0, 0, 0);
 	car.chassisList[5].size.Set(0, 0, 0);
@@ -36,8 +36,8 @@ bool ModulePlayer::Start()
 	car.chassisList[10].size.Set(0, 0, 0);
 
 	car.chassisList[0].offset.Set(0, 0.8, 0);
-	car.chassisList[1].offset.Set(0, 0, 0);
-	car.chassisList[2].offset.Set(0, 0, 0);
+	car.chassisList[1].offset.Set(0, 1.3, -0.6);
+	car.chassisList[2].offset.Set(0, 0.7, 3);
 	car.chassisList[3].offset.Set(0, 0, 0);
 	car.chassisList[4].offset.Set(0, 0, 0);
 	car.chassisList[5].offset.Set(0, 0, 0);
@@ -141,7 +141,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		acceleration = MAX_ACCELERATION;
+		acceleration = App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ? MAX_ACCELERATION * 2 : MAX_ACCELERATION;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
