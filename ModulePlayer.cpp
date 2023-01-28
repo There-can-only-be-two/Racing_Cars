@@ -19,12 +19,12 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	VehicleInfo car;
-	
+
 	// Car properties ----------------------------------------
 	car.num_chassis = 11;
 
 	car.chassisList[0].size.Set(2, 0.7, 6);
-	car.chassisList[1].size.Set(1.8, 0.7, 6);
+	car.chassisList[1].size.Set(0, 0, 0);
 	car.chassisList[2].size.Set(0, 0, 0);
 	car.chassisList[3].size.Set(0, 0, 0);
 	car.chassisList[4].size.Set(0, 0, 0);
@@ -36,7 +36,7 @@ bool ModulePlayer::Start()
 	car.chassisList[10].size.Set(0, 0, 0);
 
 	car.chassisList[0].offset.Set(0, 0.8, 0);
-	car.chassisList[1].offset.Set(1.8, 0, -1);
+	car.chassisList[1].offset.Set(0, 0, 0);
 	car.chassisList[2].offset.Set(0, 0, 0);
 	car.chassisList[3].offset.Set(0, 0, 0);
 	car.chassisList[4].offset.Set(0, 0, 0);
