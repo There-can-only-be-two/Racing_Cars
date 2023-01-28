@@ -2,11 +2,11 @@
 
 #include "ModuleFonts.h"
 #include "ModuleTextures.h"
-#include "ModuleRender2D.h"
+#include "ModuleRenderer2D.h"
 
 #include<string.h>
 
-ModuleFonts::ModuleFonts(Application* app, bool isEnabled) : Module(app, isEnabled) {
+ModuleFonts::ModuleFonts(Application* app, bool start_enabled) : Module(app, start_enabled) {
 
 }
 
@@ -112,7 +112,7 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const {
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		App->renderer->Blit(font->texture, x, y, &spriteRect, 0.0f, false);
+		App->renderer2D->Blit(font->texture, x, y, &spriteRect, 0.0f, false);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

@@ -1,8 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleRender2D.h"
+#include "ModuleRenderer2D.h"
 
-ModuleRender2D::ModuleRender2D(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleRenderer2D::ModuleRenderer2D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	renderer = NULL;
 	camera.x = camera.y = 0;
@@ -11,11 +11,11 @@ ModuleRender2D::ModuleRender2D(Application* app, bool start_enabled) : Module(ap
 }
 
 // Destructor
-ModuleRender2D::~ModuleRender2D()
+ModuleRenderer2D::~ModuleRenderer2D()
 {}
 
 // Called before render is available
-bool ModuleRender2D::Init()
+bool ModuleRenderer2D::Init()
 {
 	LOG("Creating Renderer context");
 	bool ret = true;
@@ -38,7 +38,7 @@ bool ModuleRender2D::Init()
 }
 
 // PreUpdate: clear buffer
-update_status ModuleRender2D::PreUpdate()
+update_status ModuleRenderer2D::PreUpdate(float dt)
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
@@ -46,7 +46,7 @@ update_status ModuleRender2D::PreUpdate()
 }
 
 // Update: debug camera
-update_status ModuleRender2D::Update()
+update_status ModuleRenderer2D::Update(float dt)
 {
 	/*
 	int speed = 3;
@@ -63,14 +63,14 @@ update_status ModuleRender2D::Update()
 }
 
 // PostUpdate present buffer to screen
-update_status ModuleRender2D::PostUpdate()
+update_status ModuleRenderer2D::PostUpdate(float dt)
 {
 	SDL_RenderPresent(renderer);
 	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
-bool ModuleRender2D::CleanUp()
+bool ModuleRenderer2D::CleanUp()
 {
 	LOG("Destroying renderer");
 
@@ -84,7 +84,7 @@ bool ModuleRender2D::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender2D::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y)
+bool ModuleRenderer2D::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	SDL_Rect rect;
@@ -123,7 +123,7 @@ bool ModuleRender2D::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section,
 	return ret;
 }
 
-bool ModuleRender2D::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera)
+bool ModuleRenderer2D::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera)
 {
 	bool ret = true;
 
@@ -150,7 +150,7 @@ bool ModuleRender2D::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
-bool ModuleRender2D::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
+bool ModuleRenderer2D::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
 {
 	bool ret = true;
 
@@ -173,7 +173,7 @@ bool ModuleRender2D::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, 
 	return ret;
 }
 
-bool ModuleRender2D::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
+bool ModuleRenderer2D::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
 {
 	bool ret = true;
 

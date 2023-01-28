@@ -1,5 +1,4 @@
-#ifndef __ModuleAudio_H__
-#define __ModuleAudio_H__
+#pragma once
 
 #include "Module.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -30,5 +29,3 @@ private:
 	Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 };
-
-#endif // __ModuleAudio_H__

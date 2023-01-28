@@ -1,29 +1,42 @@
 #pragma once
 
+#include "Module.h"
 #include "p2List.h"
 #include "Globals.h"
 #include "Timer.h"
-#include "Module.h"
 #include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleAudio.h"
-#include "ModuleSceneIntro.h"
-#include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
+#include "ModuleInput.h"
+#include "ModuleTextures.h"
+#include "ModuleFonts.h"
+#include "ModuleAudio.h"
 #include "ModulePhysics3D.h"
+#include "ModuleSceneIntro.h"
 #include "ModulePlayer.h"
+#include "ModuleDebug.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleRenderer2D.h"
+
 
 class Application
 {
 public:
 	ModuleWindow* window;
-	ModuleInput* input;
-	ModuleAudio* audio;
-	ModuleSceneIntro* scene_intro;
-	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
+	ModuleInput* input;
+	ModuleTextures* textures;
+	ModuleFonts* fonts;
+	ModuleAudio* audio;
 	ModulePhysics3D* physics;
+
+	ModuleSceneIntro* scene_intro;
 	ModulePlayer* player;
+
+	ModuleDebug* debug;
+
+	ModuleRenderer3D* renderer3D;
+	ModuleRenderer2D* renderer2D;
+
 
 private:
 
