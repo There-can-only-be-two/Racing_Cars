@@ -134,42 +134,48 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	// NITRO
+	// FORWARD
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		acceleration = App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ? MAX_ACCELERATION * 2 : MAX_ACCELERATION;
-		nitro = true;
-	}
-	else
+		// NITRO
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 
+		{
+			acceleration = MAX_ACCELERATION * 2;
+			nitro = true;
+		}
+		else
+		{
+			acceleration = MAX_ACCELERATION;
+			nitro = false;
+		}	
+	}	
+	// BACKWARD
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		nitro = false;
+		brake = BRAKE_POWER;
+	}
+
+	// LEFT
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		if (turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
+	}
+	// RIGHT
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		if (turn > -TURN_DEGREES)
+			turn -= TURN_DEGREES;
 	}
 
 	// JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !airborne)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && airborne)
 	{
 		//jumpTime->Start();
 		//isJumped = true;
 		vehicle->vehicle->getRigidBody()->applyCentralForce({ 0,69420,0 });
 	}
 
-	// TURN
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		brake = BRAKE_POWER;
-	}
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
@@ -178,7 +184,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[96];
-	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s   |   nitro: %s   |   %6.1f Km/h   |  ", airborne ? "true" : "false", airborne ? "on" : "off", vehicle->GetKmh());
+	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s   |   nitro: %s   |   %6.1f Km/h   |  ", airborne ? "true" : "false", nitro ? "on" : "off", vehicle->GetKmh());
 
 	App->window->SetTitle(title);
 
