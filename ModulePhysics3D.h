@@ -40,14 +40,6 @@ public:
 
 private:
 
-	//flags/debug
-	bool debug;
-	bool drawWorld;
-
-	btVector3 gravity;
-	bool gravityON;
-
-
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;
 	btBroadphaseInterface*				broad_phase;
@@ -61,6 +53,16 @@ private:
 	p2List<btDefaultMotionState*> motions;
 	p2List<btTypedConstraint*> constraints;
 	p2List<PhysVehicle3D*> vehicles;
+
+public:
+	//flags/debug
+	bool debug;
+	bool drawWorld;
+
+	bool freeCamera;
+
+	btVector3 gravity;
+	bool gravityON;
 };
 
 class DebugDrawer : public btIDebugDraw

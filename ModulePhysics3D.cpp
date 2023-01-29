@@ -147,6 +147,10 @@ update_status ModulePhysics3D::Update(float dt)
 			}
 		}		
 
+		//Camera		
+		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			freeCamera = !freeCamera;
+
 		//Gravity
 		if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT) { gravity.setY(gravity.getY() - 0.1); }			
 		if (App->input->GetKey(SDL_SCANCODE_U) == KEY_REPEAT) { gravity.setY(gravity.getY() + 0.1); }
@@ -154,6 +158,18 @@ update_status ModulePhysics3D::Update(float dt)
 
 		int gON = gravityON ? 1 : 0;
 		world->setGravity(btVector3(0, gravity.getY() * gON, 0));
+
+		//Mass - TODO
+
+		App->player->vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 1;
+
+
+		/*if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT) { gravity.setY(gravity.getY() - 0.1); }
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) { gravity.setY(gravity.getY() + 0.1); }
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) { gravityON = !gravityON; }
+
+		int gON = gravityON ? 1 : 0;
+		world->setGravity(btVector3(0, gravity.getY() * gON, 0));*/
 
 
 		//nice balls

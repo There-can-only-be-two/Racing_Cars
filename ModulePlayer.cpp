@@ -112,6 +112,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 
+	
 	// LISTENER --------------------------
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->collision_listeners.add(this);
@@ -183,8 +184,9 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	char title[96];
-	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s   |   nitro: %s   |   %6.1f Km/h   |  ", airborne ? "true" : "false", nitro ? "on" : "off", vehicle->GetKmh());
+	char title[128];
+	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s  |  nitro: %s  |  %6.1f Km/h  |  gravity (%s): %5.1f m/s^2  ",
+		airborne ? "true" : "false", nitro ? "on" : "off", vehicle->GetKmh(), App->physics->gravityON ? "on" : "off" , App->physics->gravity.getY());
 
 	App->window->SetTitle(title);
 

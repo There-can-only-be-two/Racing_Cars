@@ -30,8 +30,16 @@ struct VehicleInfo
 		vec3 offset;
 	};
 	
-	Chassis chassisList[20];
+	struct Sensor
+	{
+		vec3 size;
+		vec3 offset;
+	};
+
+	Chassis chassisList[10];
 	int num_chassis;
+
+	Chassis sensorList[10];
 
 	float mass;
 	float suspensionStiffness;		// default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
