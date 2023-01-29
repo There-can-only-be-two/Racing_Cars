@@ -62,7 +62,7 @@ bool ModulePhysics3D::Start()
 	coeficientDragClay = 30;
 	dragOn = false;
 	//aeroLiftForce = 300;
-	coeficientLiftAero = 20;
+	coeficientLiftAero = 50;
 	liftOn = false;
 
 	bodyMass = 220.0f;
