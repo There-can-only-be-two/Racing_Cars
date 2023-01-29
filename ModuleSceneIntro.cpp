@@ -17,6 +17,14 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	// CREATE MAP
+	//Test zone
+	CreatePlatform(vec3(100, 1, 100), vec3(50, 0, 50), 0, Red);
+	CreatePlatform(vec3(100, 1, 100), vec3(50, 0, -50), 0, Magenta);
+	CreatePlatform(vec3(100, 1, 100), vec3(-50, 0, 50), 0, Green);
+	CreatePlatform(vec3(100, 1, 100), vec3(-50, 0, -50), 0, Yellow);
+	//CreateCorner(vec3(15, 1, 30), vec3(0, 0, 0), 0, 15, 3, true, Red);
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
