@@ -39,4 +39,7 @@ public:
 	//flags
 	bool airborne;
 	bool nitro;
+	bool death;
+	
+	int deathcount;
 };

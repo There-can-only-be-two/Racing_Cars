@@ -36,6 +36,10 @@ bool ModuleSceneIntro::Start()
 	CreatePlatform(vec3(100, 1, 50), vec3(118, 0, 788), 45, Orange);
 	CreatePlatform(vec3(200, 1, 50), vec3(0, 0, 816), 0, Orange);
 
+	/*pb_checkpoint1 = App->physics->AddBody(p_checkpoint1, 1.0f, true);
+	pb_checkpoint1->SetPos(0,1,0);
+	pb_checkpoint1->ctype = ColliderType::CHECKPOINT;
+	pb_checkpoint1*/
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -83,7 +87,6 @@ void ModuleSceneIntro::CreatePlatform(vec3 size, vec3 pos, int alpha, Color colo
 	cube->SetPos(pos.x, pos.y, pos.z);
 	cube->SetRotation(alpha, { 0, 1, 0 });
 	cube->color = color;
-
 	cubeList.add(cube);
 	App->physics->AddBody(*cube, 0);
 	//App->physics->GetPhysBodyList().getLast()->data->body->setFriction(1000.0f);

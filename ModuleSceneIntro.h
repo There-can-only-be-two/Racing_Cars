@@ -49,4 +49,7 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
+
+	PhysBody3D* pb_checkpoint1;
+	Cube p_checkpoint1;
 };

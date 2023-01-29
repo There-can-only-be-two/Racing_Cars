@@ -65,6 +65,9 @@ bool ModulePhysics3D::Start()
 	coeficientLiftAero = 50;
 	liftOn = false;
 
+	goalcount = 0;
+	goal = false;
+
 	bodyMass = 220.0f;
 
 
@@ -250,6 +253,27 @@ update_status ModulePhysics3D::Update(float dt)
 			}
 		}
 
+		btVector3 getP = vehicle->data->body->getWorldTransform().getOrigin();
+		
+		vec3 pos;
+		pos.x = getP.x();
+		pos.y = getP.y();
+		pos.z = getP.z();
+
+		LOG("Z = %d", pos.z);
+		LOG("X = %d", pos.x);
+		LOG("Y = %d", pos.y);
+
+
+		if (vehicle->data->body->getCenterOfMassPosition().getZ() > 150 && vehicle->data->body->getCenterOfMassPosition().getZ() < 350 &&
+			vehicle->data->body->getCenterOfMassPosition().getX() > 50  && vehicle->data->body->getCenterOfMassPosition().getX() < 100)
+		{
+			goal = true;
+		}
+
+		if (goalcount == 3)
+			return UPDATE_STOP;
+
 		//nice balls
 		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
 		{
@@ -344,7 +368,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
+PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, bool sensor)
 {
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
 	shapes.add(colShape);
@@ -362,6 +386,11 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
+
+	if (sensor)
+	{
+		pbody->SetAsSensor(true);
+	}
 
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);

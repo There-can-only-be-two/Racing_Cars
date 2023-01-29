@@ -19,6 +19,9 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	//collisionTimer.Start();
 
+	deathcount = 0;
+	death = false;
+
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -128,21 +131,6 @@ bool ModulePlayer::Start()
 	vehicleSensor->body->setUserPointer(vehicleSensor);
 	vehicleSensor->body->setCollisionFlags(vehicleSensor->body->getCollisionFlags() | btCollisionObject::CO_GHOST_OBJECT);
 
-
-	//cubeVehicleSensor.SetPos(0, 10, 0);
-	//cubeVehicleSensor.size = { 0.25,0.25,0.25 };
-	//cubeVehicleSensor.color = White;
-	//bodySensor = App->physics->AddBody(cubeVehicleSensor, 0);
-
-	////App->physics->world->addCollisionObject(bodySensor);
-
-	//bodySensor->collision_listeners.add(this);
-	////bodySensor->body->setUserPointer(bodySensor);
-	//bodySensor->SetAsSensor(true);
-	//bodySensor->body->setCollisionFlags(bodySensor->body->getCollisionFlags() | btCollisionObject::CO_GHOST_OBJECT);
-
-	//bodySensor->SetPos(0, 10, 0);
-
 	
 	// LISTENER --------------------------
 	vehicle = App->physics->AddVehicle(car);
@@ -169,7 +157,12 @@ update_status ModulePlayer::Update(float dt)
 	// TP TO DEATH
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		vehicle->SetPos(0, 90, 0);
+		vehicle->SetPos(0, -90, 0);
+	}
+
+	if (vehicle->GetKmh() > 600)
+	{
+		return UPDATE_STOP;
 	}
 
 	// DEATH
@@ -183,6 +176,19 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 		vehicle->SetTransform(matrixRot);
 		vehicle->SetPos(0, 1, 0);
+
+		death = true;
+	}
+
+	if (death)
+	{
+		deathcount++;
+		death = false;
+	}
+
+	if (deathcount == 3)
+	{
+		return UPDATE_STOP;
 	}
 
 	//SNESOR
@@ -258,10 +264,10 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	char title[128];
-	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s  |  nitro: %s  |  %6.1f Km/h  |  gravity (%s): %5.1f m/s^2  |  mass (%.1f) ",
+	char title[138];
+	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s  |  nitro: %s  |  %6.1f Km/h  |  gravity (%s): %5.1f m/s^2  |  mass (%.1f) | Deaths %d",
 		airborne ? "true" : "false", nitro ? "on" : "off", vehicle->GetKmh(), App->physics->gravityON ? "on" : "off" , App->physics->gravity.getY(),
-		App->physics->bodyMass);
+		App->physics->bodyMass, deathcount);
 
 	App->window->SetTitle(title);
 

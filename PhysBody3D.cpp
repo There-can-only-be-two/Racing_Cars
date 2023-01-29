@@ -58,3 +58,15 @@ void PhysBody3D::SetAsSensor(bool pIsSensor)
 			body->setCollisionFlags(body->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
 	}
 }
+
+//vec3 PhysBody3D::GetPos()
+//{
+//	btVector3 getP = body->getWorldTransform().getOrigin();
+//
+//	vec3 pos;
+//	pos.x = getP.x();
+//	pos.y = getP.y();
+//	pos.z = getP.z();
+//
+//	return pos;
+//}

@@ -10,6 +10,7 @@ class Module;
 enum class ColliderType
 {
 	GROUND,
+	CHECKPOINT,
 
 	//SENSORS
 	SENSOR_DEATH,
