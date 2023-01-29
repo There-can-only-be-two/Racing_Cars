@@ -58,6 +58,7 @@ bool ModulePhysics3D::Start()
 
 	//var
 	gravity = GRAVITY;
+	bodyMass = 220.0f;
 
 	// Big plane as ground - MUST DELETE
 	/*{
@@ -126,6 +127,9 @@ update_status ModulePhysics3D::Update(float dt)
 			//Reset stuff
 			world->setGravity(GRAVITY);
 			gravity = GRAVITY;
+
+			p2List_item<PhysVehicle3D*>* vehicle = vehicles.getFirst();
+			vehicle->data->body->setMassProps(bodyMass = 220, vehicle->data->body->getLocalInertia());
 		}
 	}
 
@@ -160,16 +164,26 @@ update_status ModulePhysics3D::Update(float dt)
 		world->setGravity(btVector3(0, gravity.getY() * gON, 0));
 
 		//Mass - TODO
+		p2List_item<PhysVehicle3D*>* vehicle = vehicles.getFirst();
+		
+		
+		/*btVector3 localInertia(0, 0, 0);
+		comShape->calculateLocalInertia(info.mass, localInertia);*/
 
-		App->player->vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 1;
-
-
-		/*if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT) { gravity.setY(gravity.getY() - 0.1); }
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) { gravity.setY(gravity.getY() + 0.1); }
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) { gravityON = !gravityON; }
-
-		int gON = gravityON ? 1 : 0;
-		world->setGravity(btVector3(0, gravity.getY() * gON, 0));*/
+		
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT) 
+		{ 
+			bodyMass--;
+			if (bodyMass == 0)
+				bodyMass = 1;
+			vehicle->data->body->setMassProps(bodyMass, vehicle->data->body->getLocalInertia());
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) 
+		{ 
+			bodyMass++;
+			vehicle->data->body->setMassProps(bodyMass, vehicle->data->body->getLocalInertia());
+		}
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) { vehicle->data->body->setMassProps(bodyMass = 1,vehicle->data->body->getLocalInertia()); }
 
 
 		//nice balls
