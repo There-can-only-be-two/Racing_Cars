@@ -40,7 +40,13 @@ public:
 
 private:
 
+	//flags/debug
 	bool debug;
+	bool drawWorld;
+
+	btVector3 gravity;
+	bool gravityON;
+
 
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;

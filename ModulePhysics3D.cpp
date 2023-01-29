@@ -50,12 +50,16 @@ bool ModulePhysics3D::Start()
 {
 	LOG("Creating Physics environment");
 
+	//world
 	world = new btDiscreteDynamicsWorld(dispatcher, broad_phase, solver, collision_conf);
 	world->setDebugDrawer(debug_draw);
 	world->setGravity(GRAVITY);
 	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
 
-	// Big plane as ground
+	//var
+	gravity = GRAVITY;
+
+	// Big plane as ground - MUST DELETE
 	{
 		btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
@@ -112,22 +116,48 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 // ---------------------------------------------------------
 update_status ModulePhysics3D::Update(float dt)
 {
-	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	// DEBUG ON/OFF
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+	{
 		debug = !debug;
+
+		if (!debug)
+		{
+			//Reset stuff
+			world->setGravity(GRAVITY);
+			gravity = GRAVITY;
+		}
+	}
 
 	if(debug == true)
 	{
-		world->debugDrawWorld();
-
-		// Render vehicles
-		p2List_item<PhysVehicle3D*>* item = vehicles.getFirst();
-		while(item)
+		//Draw stuff
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+			drawWorld = !drawWorld;
+		if (drawWorld)
 		{
-			item->data->Render();
-			item = item->next;
-		}
+			world->debugDrawWorld();
 
-		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			// Render vehicles
+			p2List_item<PhysVehicle3D*>* item = vehicles.getFirst();
+			while (item)
+			{
+				item->data->Render();
+				item = item->next;
+			}
+		}		
+
+		//Gravity
+		if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT) { gravity.setY(gravity.getY() - 0.1); }			
+		if (App->input->GetKey(SDL_SCANCODE_U) == KEY_REPEAT) { gravity.setY(gravity.getY() + 0.1); }
+		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) { gravityON = !gravityON; }
+
+		int gON = gravityON ? 1 : 0;
+		world->setGravity(btVector3(0, gravity.getY() * gON, 0));
+
+
+		//nice balls
+		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
 		{
 			Sphere s(1);
 			s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
