@@ -17,6 +17,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+	//collisionTimer.Start();
 
 	VehicleInfo car;
 
@@ -110,7 +111,11 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
+
+	// LISTENER --------------------------
 	vehicle = App->physics->AddVehicle(car);
+	vehicle->collision_listeners.add(this);
+	vehicle->body->setUserPointer(vehicle);
 	vehicle->SetPos(0, 1, 0);
 	
 	return true;
@@ -128,12 +133,22 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-	
+
+	// TURBO
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ? MAX_ACCELERATION * 2 : MAX_ACCELERATION;
 	}
 
+	// JUMP
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !airborne)
+	{
+		//jumpTime->Start();
+		//isJumped = true;
+		vehicle->vehicle->getRigidBody()->applyCentralForce({ 0,69420,0 });
+	}
+
+	// TURN
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		if(turn < TURN_DEGREES)
@@ -162,4 +177,15 @@ update_status ModulePlayer::Update(float dt)
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	switch (body2->ctype)
+	{
+	case ColliderType::GROUND:
+		LOG("Collision GROUND");
+		airborne = false;
+		break;
+	}
 }

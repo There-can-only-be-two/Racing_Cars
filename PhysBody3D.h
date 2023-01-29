@@ -7,6 +7,15 @@ class btRigidBody;
 class Module;
 
 // =================================================
+enum class ColliderType
+{
+	GROUND,
+
+	//SENSORS
+	SENSOR_DEATH,
+
+	UNKNOWN
+};
 struct PhysBody3D
 {
 	friend class ModulePhysics3D;
@@ -21,6 +30,7 @@ public:
 
 public:
 	btRigidBody* body = nullptr;
+	ColliderType ctype;
 	p2List<Module*> collision_listeners;
 };
 
