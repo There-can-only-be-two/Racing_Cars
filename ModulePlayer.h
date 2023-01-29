@@ -25,11 +25,12 @@ public:
 public:
 	Timer collisionTimer;
 
-	Cube cSensor;
+	Cube cubeVehicleSensor;
 	PhysBody3D* pBodySensor;
 
 	PhysVehicle3D* vehicle;
 	PhysVehicle3D* vehicleSensor;
+
 	float turn;
 	float acceleration;
 	float brake;

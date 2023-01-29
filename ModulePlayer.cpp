@@ -22,7 +22,7 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.num_chassis = 11;
+	car.num_chassis = 6;
 
 	car.chassisList[0].size.Set(2, 0.7, 4);
 	car.chassisList[1].size.Set(1.6, 0.3, 3.5);
@@ -111,6 +111,37 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
+		// SENSORS ---------------------------
+	VehicleInfo sensor;
+
+	sensor.sensorList[0].size.Set(0.75f, 0.5f, 0.75f);
+	sensor.sensorList[0].offset.Set(0, 0, 0);
+	sensor.mass = 0.001f;
+	sensor.num_wheels = 0;
+
+	vehicleSensor = App->physics->AddVehicle(sensor);
+	vehicleSensor->color = White;
+	vehicleSensor->body->setGravity({ 0,0,0 });
+	//vehicleSensor->collision_listeners.add(this);
+
+	vehicleSensor->SetAsSensor(true);
+	vehicleSensor->body->setUserPointer(vehicleSensor);
+	vehicleSensor->body->setCollisionFlags(vehicleSensor->body->getCollisionFlags() | btCollisionObject::CO_GHOST_OBJECT);
+
+
+	//cubeVehicleSensor.SetPos(0, 10, 0);
+	//cubeVehicleSensor.size = { 0.25,0.25,0.25 };
+	//cubeVehicleSensor.color = White;
+	//bodySensor = App->physics->AddBody(cubeVehicleSensor, 0);
+
+	////App->physics->world->addCollisionObject(bodySensor);
+
+	//bodySensor->collision_listeners.add(this);
+	////bodySensor->body->setUserPointer(bodySensor);
+	//bodySensor->SetAsSensor(true);
+	//bodySensor->body->setCollisionFlags(bodySensor->body->getCollisionFlags() | btCollisionObject::CO_GHOST_OBJECT);
+
+	//bodySensor->SetPos(0, 10, 0);
 
 	
 	// LISTENER --------------------------
@@ -135,11 +166,13 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
+	// TP TO DEATH
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
 		vehicle->SetPos(0, -90, 0);
 	}
 
+	// DEATH
 	if (vehicle->body->getCenterOfMassPosition().getY() < -100)
 	{
 		const float matrixRot[16] = { 0,0,0,0,
@@ -151,6 +184,26 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->SetTransform(matrixRot);
 		vehicle->SetPos(0, 1, 0);
 	}
+
+	//SNESOR
+#pragma region SENSOR_POS
+
+	/*btQuaternion q = vehicle->vehicle->getChassisWorldTransform().getRotation();
+
+	cubeVehicleSensor.SetPos(positionCM.getX(), positionCM.getY() - 0.55, positionCM.getZ());
+	vehicle->vehicle->getChassisWorldTransform().getOpenGLMatrix(&cubeVehicleSensor.transform);
+	btVector3 offset(0, -0.55, 0);
+	offset = offset.rotate(q.getAxis(), q.getAngle());
+
+	cubeVehicleSensor.transform.M[12] += offset.getX();
+	cubeVehicleSensor.transform.M[13] += offset.getY();
+	cubeVehicleSensor.transform.M[14] += offset.getZ();
+	float* pos = cubeVehicleSensor.transform.M;
+	bodySensor->SetTransform(pos);
+	sensorV->SetTransform(pos);	*/
+
+#pragma endregion SENSOR_POS
+
 
 	// FORWARD
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
