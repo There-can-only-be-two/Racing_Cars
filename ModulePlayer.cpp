@@ -135,6 +135,23 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		vehicle->SetPos(0, -90, 0);
+	}
+
+	if (vehicle->body->getCenterOfMassPosition().getY() < -100)
+	{
+		const float matrixRot[16] = { 0,0,0,0,
+									  0,0,0,0,
+									  0,0,1,0,
+									  0,0,0,1 };
+		vehicle->body->setLinearVelocity(btVector3(0, 0, 0));
+		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+		vehicle->SetTransform(matrixRot);
+		vehicle->SetPos(0, 1, 0);
+	}
+
 	// FORWARD
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
