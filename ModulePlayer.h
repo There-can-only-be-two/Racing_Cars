@@ -35,4 +35,5 @@ public:
 
 	//flags
 	bool airborne;
+	bool nitro;
 };

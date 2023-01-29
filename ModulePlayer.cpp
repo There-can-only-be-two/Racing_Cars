@@ -134,10 +134,15 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	// TURBO
+	// NITRO
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ? MAX_ACCELERATION * 2 : MAX_ACCELERATION;
+		nitro = true;
+	}
+	else
+	{
+		nitro = false;
 	}
 
 	// JUMP
@@ -172,8 +177,9 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	char title[96];
+	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s   |   nitro: %s   |   %6.1f Km/h   |  ", airborne ? "true" : "false", airborne ? "on" : "off", vehicle->GetKmh());
+
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
