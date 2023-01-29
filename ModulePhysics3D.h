@@ -65,6 +65,14 @@ public:
 	bool gravityON;
 
 	btScalar bodyMass;
+	float clayDragForce;
+	float coeficientDragClay;
+	bool dragOn;
+
+	float aeroLiftForce;
+	float coeficientLiftAero;
+	bool liftOn;
+
 };
 
 class DebugDrawer : public btIDebugDraw

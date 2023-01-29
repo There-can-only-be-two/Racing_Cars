@@ -176,14 +176,18 @@ update_status ModulePlayer::Update(float dt)
 	// LEFT
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		if (turn < TURN_DEGREES)
+		if (turn < TURN_DEGREES && !App->physics->dragOn)
 			turn += TURN_DEGREES;
+		else if (turn < TURN_DEGREES && App->physics->dragOn)
+			turn += TURN_DEGREES_CLAY;
 	}
 	// RIGHT
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		if (turn > -TURN_DEGREES)
+		if (turn > -TURN_DEGREES && !App->physics->dragOn)
 			turn -= TURN_DEGREES;
+		else if (turn < TURN_DEGREES && App->physics->dragOn)
+			turn -= TURN_DEGREES_CLAY;
 	}
 
 	// JUMP

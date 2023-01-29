@@ -58,7 +58,15 @@ bool ModulePhysics3D::Start()
 
 	//var
 	gravity = GRAVITY;
+	//clayDragForce = 300;
+	coeficientDragClay = 30;
+	dragOn = false;
+	//aeroLiftForce = 300;
+	coeficientLiftAero = 20;
+	liftOn = false;
+
 	bodyMass = 220.0f;
+
 
 	// Big plane as ground - MUST DELETE
 	/*{
@@ -165,12 +173,7 @@ update_status ModulePhysics3D::Update(float dt)
 
 		//Mass - TODO
 		p2List_item<PhysVehicle3D*>* vehicle = vehicles.getFirst();
-		
-		
-		/*btVector3 localInertia(0, 0, 0);
-		comShape->calculateLocalInertia(info.mass, localInertia);*/
 
-		
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT) 
 		{ 
 			bodyMass--;
@@ -185,6 +188,67 @@ update_status ModulePhysics3D::Update(float dt)
 		}
 		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) { vehicle->data->body->setMassProps(bodyMass = 1,vehicle->data->body->getLocalInertia()); }
 
+		//Forces
+
+		//Drag Force Clay
+		if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) //function for debug
+		{
+			dragOn = !dragOn;
+			LOG("Activated DRAGGGGGGGGGGGGG");
+		}
+		if (dragOn)
+		{
+			if (vehicle->data->body->getLinearVelocity().getZ() > 0)
+			{
+				clayDragForce = -coeficientDragClay * vehicle->data->body->getLinearVelocity().getZ();
+				vehicle->data->body->applyForce(btVector3(0, 0, clayDragForce), btVector3(0, 0, 0));
+			}
+			if (vehicle->data->body->getLinearVelocity().getZ() < 0)
+			{
+				clayDragForce = -coeficientDragClay * vehicle->data->body->getLinearVelocity().getZ();
+				vehicle->data->body->applyForce(btVector3(0, 0, clayDragForce), btVector3(0, 0, 0));
+			}
+			if (vehicle->data->body->getLinearVelocity().getX() > 0)
+			{
+				clayDragForce = -coeficientDragClay * vehicle->data->body->getLinearVelocity().getX();
+				vehicle->data->body->applyForce(btVector3(clayDragForce, 0, 0), btVector3(0, 0, 0));
+			}
+			if (vehicle->data->body->getLinearVelocity().getX() < 0)
+			{
+				clayDragForce = -coeficientDragClay * vehicle->data->body->getLinearVelocity().getX();
+				vehicle->data->body->applyForce(btVector3(clayDragForce, 0, 0), btVector3(0, 0, 0));
+			}
+		}
+
+		//Aerodynamic drag force
+		if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) //function for debug
+		{
+			liftOn = !liftOn;
+			LOG("Activated AERODYNAMICCCCCCCC");
+		}
+		if (liftOn)
+		{
+			if (vehicle->data->body->getLinearVelocity().getZ() > 10)
+			{
+				aeroLiftForce = -coeficientLiftAero * vehicle->data->body->getLinearVelocity().getZ();
+				vehicle->data->body->applyForce(btVector3(0, aeroLiftForce, 0), btVector3(0, 0, 0));
+			}
+			if (vehicle->data->body->getLinearVelocity().getZ() < -10)
+			{
+				aeroLiftForce = coeficientLiftAero * vehicle->data->body->getLinearVelocity().getZ();
+				vehicle->data->body->applyForce(btVector3(0, aeroLiftForce, 0), btVector3(0, 0, 0));
+			}
+			if (vehicle->data->body->getLinearVelocity().getX() > 10)
+			{
+				aeroLiftForce = -coeficientLiftAero * vehicle->data->body->getLinearVelocity().getX();
+				vehicle->data->body->applyForce(btVector3(0, aeroLiftForce, 0), btVector3(0, 0, 0));
+			}
+			if (vehicle->data->body->getLinearVelocity().getX() < -10)
+			{
+				aeroLiftForce = coeficientLiftAero * vehicle->data->body->getLinearVelocity().getX();
+				vehicle->data->body->applyForce(btVector3(0, aeroLiftForce, 0), btVector3(0, 0, 0));
+			}
+		}
 
 		//nice balls
 		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
