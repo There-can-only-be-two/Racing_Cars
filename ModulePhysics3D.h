@@ -63,6 +63,8 @@ public:
 
 	btVector3 gravity;
 	bool gravityON;
+
+	btScalar bodyMass;
 };
 
 class DebugDrawer : public btIDebugDraw

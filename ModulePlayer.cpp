@@ -137,7 +137,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		vehicle->SetPos(0, -90, 0);
+		vehicle->SetPos(0, 90, 0);
 	}
 
 	if (vehicle->body->getCenterOfMassPosition().getY() < -100)
@@ -202,8 +202,9 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[128];
-	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s  |  nitro: %s  |  %6.1f Km/h  |  gravity (%s): %5.1f m/s^2  ",
-		airborne ? "true" : "false", nitro ? "on" : "off", vehicle->GetKmh(), App->physics->gravityON ? "on" : "off" , App->physics->gravity.getY());
+	sprintf_s(title, " Awesome Epic CarGame    ||    airborne: %s  |  nitro: %s  |  %6.1f Km/h  |  gravity (%s): %5.1f m/s^2  |  mass (%.1f) ",
+		airborne ? "true" : "false", nitro ? "on" : "off", vehicle->GetKmh(), App->physics->gravityON ? "on" : "off" , App->physics->gravity.getY(),
+		App->physics->bodyMass);
 
 	App->window->SetTitle(title);
 
