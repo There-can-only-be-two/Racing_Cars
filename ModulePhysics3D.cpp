@@ -70,6 +70,8 @@ bool ModulePhysics3D::Start()
 
 	bodyMass = 220.0f;
 
+	freeCamera = false;
+
 
 	// Big plane as ground - MUST DELETE
 	/*{
