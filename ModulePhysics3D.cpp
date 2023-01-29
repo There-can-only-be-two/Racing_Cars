@@ -60,7 +60,7 @@ bool ModulePhysics3D::Start()
 	gravity = GRAVITY;
 
 	// Big plane as ground - MUST DELETE
-	{
+	/*{
 		btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
 		btDefaultMotionState* myMotionState = new btDefaultMotionState();
@@ -68,7 +68,7 @@ bool ModulePhysics3D::Start()
 
 		btRigidBody* body = new btRigidBody(rbInfo);
 		world->addRigidBody(body);
-	}
+	}*/
 
 	return true;
 }
