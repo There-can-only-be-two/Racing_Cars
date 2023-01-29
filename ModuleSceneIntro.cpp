@@ -25,6 +25,13 @@ bool ModuleSceneIntro::Start()
 	CreatePlatform(vec3(100, 1, 100), vec3(-50, 0, -50), 0, Yellow);
 	//CreateCorner(vec3(15, 1, 30), vec3(0, 0, 0), 0, 15, 3, true, Red);
 
+	//track
+	CreateRamp(vec3(50, 1, 100), vec3(0, 21, 145), vec3(1, 0, 0), -25, 1, true, 0, Orange);
+	CreatePlatform(vec3(150, 1, 50), vec3(0, 42, 215), 0, Orange);
+	/*CreatePlatform(vec3(100, 1, 100), vec3(50, 0, 50), 0, Orange);
+	CreatePlatform(vec3(100, 1, 100), vec3(50, 0, 50), 0, Orange);
+	CreatePlatform(vec3(100, 1, 100), vec3(50, 0, 50), 0, Orange);*/
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
