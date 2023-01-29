@@ -2,6 +2,7 @@
 
 #include "PhysBody3D.h"
 #include "glmath.h"
+#include "Color.h"
 
 class btRaycastVehicle;
 struct PhysBody3D;
@@ -69,4 +70,5 @@ public:
 
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
+	Color color;
 };
