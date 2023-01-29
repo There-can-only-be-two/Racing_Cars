@@ -19,10 +19,8 @@ public:
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
 
-private:
-	btRigidBody* body = nullptr;
-
 public:
+	btRigidBody* body = nullptr;
 	p2List<Module*> collision_listeners;
 };
 

@@ -21,6 +21,11 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	//map stuff
+	void CreatePlatform(vec3 size, vec3 pos, int alpha, Color color);
+	void CreateCorner(vec3 size, vec3 pos, int alpha, int alphaStep, int steps, bool right, Color color);
+	void CreateRamp(vec3 size, vec3 pos, vec3 rot, int alpha, int steps, bool up, int slope, Color color);
+
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
@@ -29,6 +34,9 @@ public:
 	PhysBody3D* pb_snake2[MAX_SNAKE];
 	Sphere s_snake2[MAX_SNAKE];
 	*/
+
+	p2List<Cube*> cubeList;
+	p2List<PhysBody3D*> physBodyList;
 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
